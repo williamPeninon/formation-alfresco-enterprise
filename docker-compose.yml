@@ -109,22 +109,40 @@ services:
     ports:
       - "8083:8983"
 
+  # Équivalent Community de Digital Workspace (ADW Enterprise = quay.io, licence).
+  # Accessible directement sur 8082 et aussi via le proxy : http://localhost:8080/aca/
+  content-app:
+    image: alfresco/alfresco-content-app:${ACA_TAG}
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      APP_CONFIG_ECM_HOST: "http://localhost:8080"
+      APP_BASE_SHARE_URL: "http://localhost:8082/#/preview/s"
+    ports:
+      - "8082:8080"
+    depends_on:
+      - alfresco
+
   proxy:
     image: alfresco/alfresco-acs-nginx:${NGINX_TAG}
     environment:
-      # Pas de digital-workspace / control-center / sync dans ce compose Community
+      # ADW Enterprise désactivé ; Content App (Community) activé à la place
       DISABLE_ADW: "true"
+      ENABLE_CONTENT_APP: "true"
       DISABLE_CONTROL_CENTER: "true"
       DISABLE_SYNCSERVICE: "true"
       DISABLE_PROMETHEUS: "true"
     depends_on:
       - alfresco
       - share
+      - content-app
     ports:
       - "8080:8080"
     links:
       - alfresco
       - share
+      - content-app
 
 volumes:
   alf-repo-data:

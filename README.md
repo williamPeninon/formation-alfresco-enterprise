@@ -46,11 +46,16 @@ Accès une fois démarré :
 
 | Composant                  | URL                                            |
 |-----------------------------|-------------------------------------------------|
-| Alfresco Share              | http://localhost:8080/share (admin / admin)     |
-| Alfresco Digital Workspace  | http://localhost:8082/#/login (admin / admin)   |
+| Alfresco Share              | http://localhost:8080/share/ (admin / admin)    |
+| Alfresco Content App (ADW)  | http://localhost:8082/#/login (admin / admin)   |
+| Content App (via proxy)     | http://localhost:8080/aca/#/login               |
 | Console d'administration    | http://localhost:8080/share/page/console/admin-console |
 | API REST (Swagger)          | http://localhost:8080/api-explorer              |
 | ActiveMQ (supervision)      | http://localhost:8161/admin (admin / admin)     |
+
+> **Note :** sur Community, l’image **Digital Workspace** (`quay.io`, licence
+> Enterprise) n’est pas publique. On déploie à la place **Alfresco Content App**,
+> l’UI moderne équivalente, exposée sur le port **8082**.
 
 Arrêt : `docker compose down` (les données persistent dans les volumes tant
 qu'on ne fait pas `docker compose down -v`).
@@ -61,8 +66,8 @@ qu'on ne fait pas `docker compose down -v`).
 Environnement démarré en début de matinée par le formateur (ou par les
 stagiaires s'ils sont en environnement individuel).
 
-- **Module 1** : connexion à Share et à l'ADW, personnalisation du tableau
-  de bord.
+- **Module 1** : connexion à Share et à Content App (ADW), personnalisation
+  du tableau de bord.
 - **Module 2** : création du site collaboratif `Qualité-Test`, import des
   4-5 premiers documents dans une arborescence `Procédures / Enregistrements
   / Archives`, check-out/check-in.
