@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="four:fournisseurModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+  <description>Modèle de contenu - Fiche Fournisseur (formation)</description>
+  <author>Formation Alfresco</author>
+  <version>1.0</version>
+
+  <imports>
+    <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+    <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+  </imports>
+
+  <namespaces>
+    <namespace uri="http://www.formation.local/model/fournisseur/1.0" prefix="four"/>
+  </namespaces>
+
+  <constraints>
+    <constraint name="four:statutList" type="LIST">
+      <parameter name="allowedValues">
+        <list>
+          <value>En évaluation</value>
+          <value>Qualifié</value>
+          <value>Suspendu</value>
+        </list>
+      </parameter>
+    </constraint>
+    <constraint name="four:siretRegex" type="REGEX">
+      <parameter name="expression"><value>^[0-9]{14}$</value></parameter>
+      <parameter name="requiresMatch"><value>true</value></parameter>
+    </constraint>
+  </constraints>
+
+  <types>
+    <type name="four:ficheFournisseur">
+      <title>Fiche Fournisseur</title>
+      <parent>cm:content</parent>
+      <properties>
+        <property name="four:raisonSociale">
+          <title>Raison sociale</title>
+          <type>d:text</type>
+          <mandatory>true</mandatory>
+        </property>
+        <property name="four:siret">
+          <title>SIRET</title>
+          <type>d:text</type>
+          <constraints>
+            <constraint ref="four:siretRegex"/>
+          </constraints>
+        </property>
+        <property name="four:statut">
+          <title>Statut de qualification</title>
+          <type>d:text</type>
+          <default>En évaluation</default>
+          <constraints>
+            <constraint ref="four:statutList"/>
+          </constraints>
+        </property>
+        <property name="four:contactEmail">
+          <title>E-mail du contact</title>
+          <type>d:text</type>
+        </property>
+        <property name="four:dateQualification">
+          <title>Date de qualification</title>
+          <type>d:date</type>
+        </property>
+      </properties>
+    </type>
+  </types>
+
+</model>

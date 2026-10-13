@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+
+  <!-- Déclare notre modèle au dictionnaire de données d'Alfresco au démarrage -->
+  <bean id="formation.fournisseur.dictionaryBootstrap"
+        parent="dictionaryModelBootstrap"
+        depends-on="dictionaryBootstrap">
+    <property name="models">
+      <list>
+        <value>alfresco/module/formation-fournisseur/model/fournisseur-model.xml</value>
+      </list>
+    </property>
+  </bean>
+
+</beans>

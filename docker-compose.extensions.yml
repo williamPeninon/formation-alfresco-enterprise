@@ -1,0 +1,43 @@
+# =============================================================================
+# Surcouche OPTIONNELLE — extensions du Repository (Modules 8 et 9)
+# =============================================================================
+# À utiliser À LA PLACE de "docker compose up -d" une fois le module construit :
+#
+#   docker compose -f docker-compose.yml -f docker-compose.extensions.yml up -d
+#
+# Elle ajoute au conteneur "alfresco" :
+#   1. le module d'extension packagé en JAR (type "Fiche Fournisseur" + vue
+#      personnalisée Web Script)  -> extensions/formation-fournisseur.jar
+#   2. un fichier de configuration des niveaux de log -> extensions/custom-log4j2.properties
+#   3. (service share) la configuration du client Web  -> extensions/share-config-custom.xml
+#
+# "create_host_path: false" : si le JAR n'existe pas encore, Docker affiche une
+# erreur claire au lieu de créer un DOSSIER portant le nom du JAR.
+# Pour revenir à la pile de base : docker compose up -d --force-recreate alfresco
+# (sans le fichier -f ... extensions)
+
+services:
+  alfresco:
+    volumes:
+      - type: bind
+        source: ./extensions/formation-fournisseur.jar
+        target: /usr/local/tomcat/webapps/alfresco/WEB-INF/lib/formation-fournisseur.jar
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./extensions/custom-log4j2.properties
+        target: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j2.properties
+        read_only: true
+        bind:
+          create_host_path: false
+
+  # Configuration du client Web (Module 8, TP8-G)
+  share:
+    volumes:
+      - type: bind
+        source: ./extensions/share-config-custom.xml
+        target: /usr/local/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml
+        read_only: true
+        bind:
+          create_host_path: false

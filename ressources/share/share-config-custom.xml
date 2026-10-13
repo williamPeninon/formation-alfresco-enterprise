@@ -1,0 +1,72 @@
+<alfresco-config>
+
+  <!-- ===================================================================
+       Configuration du client Web (Share) — Module 8, TP8-G
+       Fichier chargé au démarrage de Share :
+       /usr/local/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml
+       =================================================================== -->
+
+  <!-- 1. Aspect ajouté à la liste des aspects visibles (les listes addable / removeable
+          restent vides : elles reprennent alors la liste « visible »),
+          et type "Fiche Fournisseur" proposé dans "Change Type" -->
+  <config evaluator="string-compare" condition="DocumentLibrary">
+    <aspects>
+      <visible>
+        <aspect name="qual:suiviQualite" />
+      </visible>
+    </aspects>
+    <types>
+      <type name="cm:content">
+        <subtype name="four:ficheFournisseur" />
+      </type>
+    </types>
+  </config>
+
+  <!-- 2. Formulaire de l'aspect "Suivi Qualité" (champs et libellés) -->
+  <config evaluator="aspect" condition="qual:suiviQualite">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="qual:statutQualite" />
+          <show id="qual:responsable" />
+          <show id="qual:dateRevue" />
+        </field-visibility>
+        <appearance>
+          <set id="suivi" appearance="title" label="Suivi Qualité" />
+          <field id="qual:statutQualite" label="Statut qualité" set="suivi" />
+          <field id="qual:responsable" label="Responsable" set="suivi" />
+          <field id="qual:dateRevue" label="Prochaine revue" set="suivi" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+  <!-- 3. Formulaire du type "Fiche Fournisseur" -->
+  <config evaluator="node-type" condition="four:ficheFournisseur">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="cm:name" />
+          <show id="cm:title" force="true" />
+          <show id="four:raisonSociale" />
+          <show id="four:siret" />
+          <show id="four:statut" />
+          <show id="four:contactEmail" />
+          <show id="four:dateQualification" />
+        </field-visibility>
+        <appearance>
+          <set id="general" appearance="title" label="Général" />
+          <set id="fournisseur" appearance="title" label="Fournisseur" />
+          <field id="cm:name" set="general" />
+          <field id="cm:title" set="general" />
+          <field id="four:raisonSociale" label="Raison sociale" set="fournisseur" />
+          <field id="four:siret" label="SIRET (14 chiffres)" set="fournisseur" />
+          <field id="four:statut" label="Statut" set="fournisseur" />
+          <field id="four:contactEmail" label="E-mail du contact" set="fournisseur" />
+          <field id="four:dateQualification" label="Date de qualification" set="fournisseur" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+</alfresco-config>

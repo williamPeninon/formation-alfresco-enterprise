@@ -1,4 +1,22 @@
 
+# =============================================================================
+# Projet fil rouge — Formation Alfresco Administrateur (édition Community)
+# =============================================================================
+# Services :
+#   alfresco ........ Repository (le moteur) + API REST/CMIS/WebDAV/FTP/IMAP
+#   share ........... Interface historique (Alfresco Share)
+#   content-app ..... Interface moderne (équivalent Community d'ADW)
+#   proxy ........... Point d'entrée unique http://localhost:8080
+#   postgres ........ Base de données (métadonnées)          -> localhost:5433
+#   search .......... Moteur de recherche Solr (index)       -> localhost:8083
+#   transform-core-aio  Service de transformation (aperçus)  -> localhost:8091
+#   activemq ........ Bus de messages                        -> localhost:8161
+#   openldap ........ Annuaire de test (Module 8)            -> ldap://localhost:3389
+#   mailpit ......... Boîte mail de test (SMTP sortant)      -> http://localhost:8025
+#
+# Extensions optionnelles (Module 8/9) : docker-compose.extensions.yml
+#   docker compose -f docker-compose.yml -f docker-compose.extensions.yml up -d
+
 services:
 
   alfresco:
@@ -25,7 +43,7 @@ services:
         -Dsolr.sharedSecret=secret
         -Dsolr.base.url=/solr
         -Dindex.subsystem.name=solr6
-        -Dshare.host=share
+        -Dshare.host=localhost
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
@@ -38,7 +56,11 @@ services:
       - alf-repo-data:/usr/local/tomcat/alf_data
       - ./config/alfresco-global.properties:/usr/local/tomcat/shared/classes/alfresco-global.properties:ro
     ports:
-      - "8081:8080"
+      - "8081:8080"          # accès direct au Repository (sans proxy)
+      - "2121:2121"          # FTP (Module 3 / 9)
+      - "21000-21010:21000-21010"   # FTP mode passif
+      - "1143:143"           # IMAP (Module 6 / 9)
+      - "2525:1025"          # SMTP entrant (Module 9, optionnel)
     depends_on:
       - postgres
       - activemq
@@ -143,6 +165,33 @@ services:
       - alfresco
       - share
       - content-app
+
+  # Annuaire LDAP de test (Module 8). Utilisateurs/groupes : ldap/bootstrap.ldif
+  # Base DN : dc=formation,dc=local — compte admin : cn=admin,dc=formation,dc=local / admin
+  openldap:
+    image: osixia/openldap:${LDAP_TAG}
+    command: --copy-service
+    mem_limit: 128m
+    environment:
+      LDAP_ORGANISATION: "Formation Alfresco"
+      LDAP_DOMAIN: "formation.local"
+      LDAP_ADMIN_PASSWORD: "admin"
+      LDAP_TLS: "false"
+    volumes:
+      - ./ldap/bootstrap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-bootstrap.ldif:ro
+    ports:
+      - "3389:389"
+
+  # Boîte mail de test (Module 5, 6, 9) : capte tous les e-mails sortants d'Alfresco.
+  # Interface web : http://localhost:8025 — SMTP interne : mailpit:1025
+  mailpit:
+    image: axllent/mailpit:${MAILPIT_TAG}
+    mem_limit: 128m
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "1"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "1"
+    ports:
+      - "8025:8025"
 
 volumes:
   alf-repo-data:

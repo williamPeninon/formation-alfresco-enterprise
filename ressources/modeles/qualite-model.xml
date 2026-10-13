@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Modèle de référence : aspect "Suivi Qualité" (Module 4).
+     C'est ce que produit le Model Manager (Admin Tools > Model Manager > Export). -->
+<model name="qual:qualiteModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+  <description>Modèle Qualité - aspect Suivi Qualité</description>
+  <author>Formation Alfresco</author>
+  <version>1.0</version>
+
+  <imports>
+    <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+    <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+  </imports>
+
+  <namespaces>
+    <namespace uri="http://www.formation.local/model/qualite/1.0" prefix="qual"/>
+  </namespaces>
+
+  <constraints>
+    <constraint name="qual:statutQualiteList" type="LIST">
+      <parameter name="allowedValues">
+        <list>
+          <value>Brouillon</value>
+          <value>En revue</value>
+          <value>Approuvé</value>
+          <value>Obsolète</value>
+        </list>
+      </parameter>
+    </constraint>
+  </constraints>
+
+  <aspects>
+    <aspect name="qual:suiviQualite">
+      <title>Suivi Qualité</title>
+      <properties>
+        <property name="qual:statutQualite">
+          <title>Statut qualité</title>
+          <type>d:text</type>
+          <default>Brouillon</default>
+          <constraints><constraint ref="qual:statutQualiteList"/></constraints>
+        </property>
+        <property name="qual:responsable">
+          <title>Responsable</title>
+          <type>d:text</type>
+        </property>
+        <property name="qual:dateRevue">
+          <title>Date de prochaine revue</title>
+          <type>d:date</type>
+        </property>
+      </properties>
+    </aspect>
+  </aspects>
+
+</model>

@@ -1,0 +1,4 @@
+<alfresco-config>
+  <!-- Configuration Share vide au départ (Module 8, TP8-G).
+       Le TP la remplace par ressources/share/share-config-custom.xml -->
+</alfresco-config>

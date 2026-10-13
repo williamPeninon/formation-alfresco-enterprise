@@ -1,0 +1,248 @@
+{
+  "info": {
+    "name": "Alfresco Formation - API REST",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Collection du TP Module 9. Variables : baseUrl, nodeId, folderId. Authentification Basic admin/admin."
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "admin",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "admin",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1"
+    },
+    {
+      "key": "nodeId",
+      "value": ""
+    },
+    {
+      "key": "folderId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Lire la racine du référentiel (Company Home)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/nodes/-root-",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "nodes",
+            "-root-"
+          ],
+          "query": []
+        },
+        "description": ""
+      }
+    },
+    {
+      "name": "2. Retrouver un document par son chemin",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/nodes/-root-?relativePath=Sites/qualite-test/documentLibrary/Procedures/PRO-001_Maitrise_documentaire.pdf&include=properties,aspectNames,path",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "nodes",
+            "-root-"
+          ],
+          "query": [
+            {
+              "key": "relativePath",
+              "value": "Sites/qualite-test/documentLibrary/Procedures/PRO-001_Maitrise_documentaire.pdf"
+            },
+            {
+              "key": "include",
+              "value": "properties,aspectNames,path"
+            }
+          ]
+        },
+        "description": ""
+      }
+    },
+    {
+      "name": "3. Lister les enfants du dossier Procedures",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/nodes/-root-/children?relativePath=Sites/qualite-test/documentLibrary/Procedures&include=properties&maxItems=50",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "nodes",
+            "-root-",
+            "children"
+          ],
+          "query": [
+            {
+              "key": "relativePath",
+              "value": "Sites/qualite-test/documentLibrary/Procedures"
+            },
+            {
+              "key": "include",
+              "value": "properties"
+            },
+            {
+              "key": "maxItems",
+              "value": "50"
+            }
+          ]
+        },
+        "description": ""
+      }
+    },
+    {
+      "name": "4. Recherche plein texte (API Search)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/alfresco/api/-default-/public/search/versions/1/search",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "alfresco",
+            "api",
+            "-default-",
+            "public",
+            "search",
+            "versions",
+            "1",
+            "search"
+          ]
+        },
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": {\n    \"language\": \"afts\",\n    \"query\": \"audit AND TYPE:\\\"cm:content\\\"\"\n  },\n  \"paging\": {\n    \"maxItems\": 10,\n    \"skipCount\": 0\n  },\n  \"include\": [\n    \"properties\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "5. Créer un dossier",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/nodes/{{folderId}}/children",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "nodes",
+            "{{folderId}}",
+            "children"
+          ],
+          "query": []
+        },
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Dossier-API\",\n  \"nodeType\": \"cm:folder\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "6. Modifier les propriétés d'un document",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/nodes/{{nodeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "nodes",
+            "{{nodeId}}"
+          ],
+          "query": []
+        },
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"properties\": {\n    \"cm:title\": \"Titre modifié par l'API\",\n    \"cm:description\": \"Mis à jour via Postman\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "7. Lister les types et aspects du modèle (Model API)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/aspects?where=(modelId in ('qual:qualiteModel'))",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "aspects"
+          ],
+          "query": [
+            {
+              "key": "where",
+              "value": "(modelId in ('qual:qualiteModel'))"
+            }
+          ]
+        },
+        "description": ""
+      }
+    }
+  ]
+}

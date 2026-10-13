@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Liste des procédures qualité</shortname>
+  <description>Vue HTML personnalisée des documents du dossier Procedures du site qualite-test</description>
+  <url>/formation/qualite/liste</url>
+  <format default="html">any</format>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+</webscript>

@@ -1,0 +1,7 @@
+CHECKLIST D'AUDIT INTERNE (PRO-005) - version 1.0
+
+[ ] Le programme d'audit annuel est disponible
+[ ] Le plan d'audit a été envoyé 15 jours avant
+[ ] Les enregistrements précédents ont été relus
+[ ] Les preuves (documents, photos) sont rattachées au rapport
+[ ] Les non-conformités sont numérotées et datées

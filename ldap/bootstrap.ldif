@@ -1,0 +1,59 @@
+# Annuaire de test — Formation Alfresco (Module 8)
+# Base DN : dc=formation,dc=local   (créée par l'image osixia/openldap)
+# Mot de passe de tous les utilisateurs : Formation2026
+
+dn: ou=people,dc=formation,dc=local
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=formation,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=jdupont,ou=people,dc=formation,dc=local
+objectClass: inetOrgPerson
+uid: jdupont
+cn: Jean Dupont
+sn: Dupont
+givenName: Jean
+mail: jean.dupont@formation.local
+userPassword: Formation2026
+
+dn: uid=mmartin,ou=people,dc=formation,dc=local
+objectClass: inetOrgPerson
+uid: mmartin
+cn: Marie Martin
+sn: Martin
+givenName: Marie
+mail: marie.martin@formation.local
+userPassword: Formation2026
+
+dn: uid=pleroy,ou=people,dc=formation,dc=local
+objectClass: inetOrgPerson
+uid: pleroy
+cn: Paul Leroy
+sn: Leroy
+givenName: Paul
+mail: paul.leroy@formation.local
+userPassword: Formation2026
+
+dn: uid=sbernard,ou=people,dc=formation,dc=local
+objectClass: inetOrgPerson
+uid: sbernard
+cn: Sophie Bernard
+sn: Bernard
+givenName: Sophie
+mail: sophie.bernard@formation.local
+userPassword: Formation2026
+
+dn: cn=ldap-qualite,ou=groups,dc=formation,dc=local
+objectClass: groupOfNames
+cn: ldap-qualite
+member: uid=jdupont,ou=people,dc=formation,dc=local
+member: uid=mmartin,ou=people,dc=formation,dc=local
+
+dn: cn=ldap-audit,ou=groups,dc=formation,dc=local
+objectClass: groupOfNames
+cn: ldap-audit
+member: uid=pleroy,ou=people,dc=formation,dc=local
+member: uid=sbernard,ou=people,dc=formation,dc=local

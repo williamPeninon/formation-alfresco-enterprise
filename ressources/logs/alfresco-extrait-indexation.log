@@ -1,0 +1,19 @@
+# EXTRAIT PÉDAGOGIQUE RECONSTITUÉ (fictif) - exercice Module 9 : trouvez l'erreur d'indexation
+2026-10-12 08:02:11,402  INFO  [org.alfresco.solr.lifecycle.SolrCoreLoadListener] [main] Solr core alfresco loaded
+2026-10-12 08:02:15,771  INFO  [org.alfresco.solr.tracker.CoreWatcherJob] [SolrTrackerScheduler-1] Starting tracking of core alfresco
+2026-10-12 08:02:16,009  INFO  [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Tracking transactions from 0
+2026-10-12 08:02:16,512  INFO  [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Indexed 154 transactions (342 nodes) in 503 ms
+2026-10-12 08:17:16,008  INFO  [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Tracking transactions from 154
+2026-10-12 08:17:16,044  INFO  [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] No new transactions to index
+2026-10-12 09:41:02,120  WARN  [org.alfresco.solr.client.SOLRAPIClient] [SolrTrackerScheduler-4] Unable to get transactions: HTTP 403 Forbidden
+2026-10-12 09:41:02,121  WARN  [org.alfresco.solr.client.SOLRAPIClient] [SolrTrackerScheduler-4] Request header X-Alfresco-Search-Secret rejected by the Repository (secret mismatch)
+2026-10-12 09:41:17,119  ERROR [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Tracking failed for core alfresco
+org.alfresco.error.AlfrescoRuntimeException: 08090042 Unable to retrieve transactions from the Repository: 403 Forbidden
+	at org.alfresco.solr.client.SOLRAPIClient.getTransactions(SOLRAPIClient.java:258)
+	at org.alfresco.solr.tracker.MetadataTracker.trackRepository(MetadataTracker.java:170)
+	at org.alfresco.solr.tracker.AbstractTracker.track(AbstractTracker.java:135)
+2026-10-12 09:41:32,121  ERROR [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Tracking failed for core alfresco (2 consecutive failures)
+2026-10-12 09:56:32,118  ERROR [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Tracking failed for core alfresco (3 consecutive failures)
+2026-10-12 10:05:44,903  WARN  [org.alfresco.repo.search.impl.solr.SolrQueryHTTPClient] [http-nio-8080-exec-7] Solr returned status 403 while executing a query; falling back to no results
+2026-10-12 10:12:09,310  INFO  [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Tracking transactions from 154
+2026-10-12 10:12:09,688  INFO  [org.alfresco.solr.tracker.MetadataTracker] [SolrTrackerScheduler-2] Indexed 11 transactions (27 nodes) in 378 ms
